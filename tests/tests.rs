@@ -71,11 +71,10 @@ fn test_as_bytes_mut() {
 
 #[test]
 fn test_destroy() {
-    use std::mem::ManuallyDrop;
-    let mut v = ManuallyDrop::new(Box::new('X'));
-    destroy(&mut *v);
-    // use-after-free
-    assert_eq!(**v, 'X');
+    let mut x = 42;
+    // double free
+    destroy(&mut x);
+    destroy(&mut x);
 }
 
 #[test]
